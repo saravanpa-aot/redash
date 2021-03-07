@@ -1,4 +1,4 @@
-FROM node:12 as frontend-builder
+FROM docker-remote.artifacts.developer.gov.bc.ca/node:12 as frontend-builder
 
 # Controls whether to build the frontend assets
 ARG skip_frontend_build
@@ -22,7 +22,7 @@ RUN if [ "x$skip_frontend_build" = "x" ] ; then npm ci --unsafe-perm; fi
 COPY --chown=redash client /frontend/client
 COPY --chown=redash webpack.config.js /frontend/
 RUN if [ "x$skip_frontend_build" = "x" ] ; then npm run build; else mkdir -p /frontend/client/dist && touch /frontend/client/dist/multi_org.html && touch /frontend/client/dist/index.html; fi
-FROM python:3.7-slim
+FROM docker-remote.artifacts.developer.gov.bc.ca/python:3.7-slim
 
 EXPOSE 5000
 
