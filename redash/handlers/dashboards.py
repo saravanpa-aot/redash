@@ -40,14 +40,11 @@ order_results = partial(
 class DashboardListResource(BaseResource):
     @staticmethod
     def add_cors_headers(headers):
-        if "Origin" in request.headers:
-            origin = request.headers["Origin"]
+        headers["Access-Control-Allow-Origin"] = '*'
+        headers["Access-Control-Allow-Credentials"] = str(
+            settings.ACCESS_CONTROL_ALLOW_CREDENTIALS
+        ).lower()
 
-            if set(["*", origin]) & settings.ACCESS_CONTROL_ALLOW_ORIGIN:
-                headers["Access-Control-Allow-Origin"] = origin
-                headers["Access-Control-Allow-Credentials"] = str(
-                    settings.ACCESS_CONTROL_ALLOW_CREDENTIALS
-                ).lower()
 
     def options(self):
         headers = {}
