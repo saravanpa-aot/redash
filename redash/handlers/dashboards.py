@@ -49,7 +49,6 @@ class DashboardListResource(BaseResource):
                     settings.ACCESS_CONTROL_ALLOW_CREDENTIALS
                 ).lower()
 
-    @require_permission("list_dashboards")
     def options(self):
         headers = {}
         self.add_cors_headers(headers)
