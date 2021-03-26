@@ -108,6 +108,8 @@ def json_representation(data, code, headers=None):
         return data
     resp = make_response(json_dumps(data), code)
     resp.headers.extend(headers or {})
+
+    resp.headers["Access-Control-Allow-Origin"] = '*'
     return resp
 
 

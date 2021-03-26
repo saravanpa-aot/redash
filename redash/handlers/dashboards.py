@@ -113,9 +113,6 @@ class DashboardListResource(BaseResource):
         else:
             self.record_event({"action": "list", "object_type": "dashboard"})
 
-        if len(settings.ACCESS_CONTROL_ALLOW_ORIGIN) > 0:
-            self.add_cors_headers(response.headers)
-
         return response
 
     @require_permission("create_dashboard")
