@@ -181,7 +181,7 @@ class DashboardResource(BaseResource):
             settings.ACCESS_CONTROL_ALLOW_CREDENTIALS
         ).lower()
 
-    def options(self):
+    def options(self, **kwargs):
         headers = {}
         self.add_cors_headers(headers)
 
