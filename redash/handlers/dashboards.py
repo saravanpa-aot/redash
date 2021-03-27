@@ -23,7 +23,6 @@ from redash.serializers import (
 )
 from sqlalchemy.orm.exc import StaleDataError
 
-
 # Ordering map for relationships
 order_map = {
     "name": "lowercase_name",
@@ -44,7 +43,6 @@ class DashboardListResource(BaseResource):
         headers["Access-Control-Allow-Credentials"] = str(
             settings.ACCESS_CONTROL_ALLOW_CREDENTIALS
         ).lower()
-
 
     def options(self):
         headers = {}
@@ -175,6 +173,30 @@ class MyDashboardsResource(BaseResource):
 
 
 class DashboardResource(BaseResource):
+
+    @staticmethod
+    def add_cors_headers(headers):
+        headers["Access-Control-Allow-Origin"] = '*'
+        headers["Access-Control-Allow-Credentials"] = str(
+            settings.ACCESS_CONTROL_ALLOW_CREDENTIALS
+        ).lower()
+
+    def options(self):
+        headers = {}
+        self.add_cors_headers(headers)
+
+        if settings.ACCESS_CONTROL_REQUEST_METHOD:
+            headers[
+                "Access-Control-Request-Method"
+            ] = settings.ACCESS_CONTROL_REQUEST_METHOD
+
+        if settings.ACCESS_CONTROL_ALLOW_HEADERS:
+            headers[
+                "Access-Control-Allow-Headers"
+            ] = settings.ACCESS_CONTROL_ALLOW_HEADERS
+
+        return make_response("", 200, headers)
+
     @require_permission("list_dashboards")
     def get(self, dashboard_id=None):
         """
